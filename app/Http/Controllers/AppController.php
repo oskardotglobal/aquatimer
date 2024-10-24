@@ -10,7 +10,7 @@ class AppController
     public function index(): Response
     {
         return Inertia::render('Index', [
-            'title' => 'Laravel 11, Inertia.js, Svelte, Bootstrap 5',
+            'title' => 'Laravel 11s, Inertia., Svelte, Bootstrap 5',
         ]);
     }
 }
