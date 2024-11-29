@@ -1,0 +1,11 @@
+{
+    "extends": "@tsconfig/svelte/tsconfig.json",
+    "include": [
+        "resources/**/*.ts",
+        "resources/**/*.d.ts",
+        "resources/**/*.svelte"
+    ],
+    "compilerOptions": {
+        "strict": true
+    }
+}

@@ -14,3 +14,4 @@ Technology Stack:
 To see your changes, you should run `npm run build`  for any frontend changes (in `resources` folder).
 
 Hot reload changes are made for any backend (Laravel) changes if you run `php artisan serve` you should be able to see your svelte component render `http://127.0.0.1:8000/`
+
