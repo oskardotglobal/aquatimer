@@ -12,12 +12,11 @@ export default defineConfig({
         }),
         svelte(
             {
-                refresh: true,
                 preprocess: sveltePreprocess()
             }
         ),
         typescript({
             tsconfig: "tsconfig.json"
-        })
-    ]
+        }),
+    ],
 });

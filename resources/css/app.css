@@ -1,0 +1,27 @@
+@import "@phosphor-icons/web/regular";
+@import "@fontsource-variable/inter";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+div#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter", sans-serif;
+}
+
+.w-default {
+    @apply w-[80%] max-w-[2000px] mx-auto;
+}
+
+.w-nav {
+    @apply w-[95%] max-w-[2000px] mx-auto;
+}
+
+.disabled-area {
+    filter: brightness(50%);
+    cursor: not-allowed;
+    pointer-events: none;
+}
