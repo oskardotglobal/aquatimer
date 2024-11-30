@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('pending_actions', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
 
             $table->foreignId("node_id")->constrained();
             $table->boolean("should_water");

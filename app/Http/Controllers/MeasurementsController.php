@@ -12,14 +12,15 @@ class MeasurementsController
 {
     public function create(Request $request): JsonResponse
     {
-        assert($request->getClientIp() != null);
+        $ip = $request->getClientIp();
+        assert($ip != null);
 
-        $node = Node::where("ip_address", "=", $request->getClientIp())->get();
+        $node = Node::where("ip_address", "=", $ip)->first();
 
         if ($node == null) {
             $node = Node::create([
-                "ip_address" => $request->getClientIp(),
-                "name" => "device_" . $request->getClientIp()
+                "ip_address" => $ip,
+                "name" => "device_" . $ip
             ]);
         }
 
@@ -27,7 +28,7 @@ class MeasurementsController
 
         Measurement::create(array_merge(["node_id" => $node->id], $body));
 
-        $pending = $node->pending()->latest();
+        $pending = $node->pending()->latest()->first();
         PendingActions::where("node_id", "=", $node->id)->delete();
 
         if ($pending == null) {
@@ -35,5 +36,22 @@ class MeasurementsController
         }
 
         return response()->json(["should_water" => $pending->should_water]);
+    }
+
+    public function water(Request $request): void
+    {
+        $ip = $request->getClientIp();
+        assert($ip != null);
+
+        $node = Node::where("ip_address", "=", $ip)->first();
+
+        if ($node == null) {
+            $node = Node::create([
+                "ip_address" => $ip,
+                "name" => "device_" . $ip
+            ]);
+        }
+
+        PendingActions::create(["node_id" => $node->id, "should_water" => true]);
     }
 }

@@ -17,7 +17,7 @@ class CalculateWateringTask
                 ->map(fn($measurement) => $measurement->moisture)
                 ->avg();
 
-            if ($avg < 600) {
+            if ($avg >= 3000) {
                 PendingActions::create(["node_id" => $node->id, "should_water" => true]);
             }
         });
