@@ -2,4 +2,4 @@
 
 use App\Tasks\CalculateWateringTask;
 
-Schedule::job(new CalculateWateringTask)->everyFifteenMinutes();
+Schedule::job(new CalculateWateringTask)->everyMinute();
