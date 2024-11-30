@@ -40,17 +40,9 @@ class MeasurementsController
 
     public function water(Request $request): void
     {
-        $ip = $request->getClientIp();
-        assert($ip != null);
+        $node = Node::find($request->json()->get("node_id"));
 
-        $node = Node::where("ip_address", "=", $ip)->first();
-
-        if ($node == null) {
-            $node = Node::create([
-                "ip_address" => $ip,
-                "name" => "device_" . $ip
-            ]);
-        }
+        if ($node == null) return;
 
         PendingActions::create(["node_id" => $node->id, "should_water" => true]);
     }
