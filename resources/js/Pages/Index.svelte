@@ -16,16 +16,15 @@
     onMount(() => {
         setInterval(() => {
             router.visit(window.location.pathname);
-            console.log("revisited")
         }, 1000 * 60);
-    })
+    });
 
     let moistureMeasurements = $derived.by(() => {
         const chartData: ChartData = {
             labels: props.measurements.map(m => formatTimeString(m.created_at)),
             datasets: [
                 {
-                    data: props.measurements.map(m => m.moisture),
+                    data: props.measurements.map(m => 4095 - m.moisture),
                 },
             ]
         };
