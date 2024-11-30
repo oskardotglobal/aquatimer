@@ -8,10 +8,62 @@
     }
 
     let props: Props = $props();
-    $inspect(props);
-    let node: Node = $state({
-        name: "Node 1",
+
+    let node = $state(props.node);
+
+    let moistureMeasurements = $derived.by(() => {
+        const chartData: ChartData = {
+            labels: props.measurements.map(m => formatTimeString(m.created_at)),
+            datasets: [
+                {
+                    data: props.measurements.map(m => m.moisture),
+                },
+            ]
+        };
+
+        return chartData;
     });
+
+    let temperatureMeasurements = $derived.by(() => {
+        const chartData: ChartData = {
+            labels: props.measurements.map(m => formatTimeString(m.created_at)),
+            datasets: [
+                {
+                    data: props.measurements.map(m => m.temperature),
+                },
+            ]
+        };
+
+        return chartData;
+    });
+
+    let brightnessMeasurements = $derived.by(() => {
+        const chartData: ChartData = {
+            labels: props.measurements.map(m => formatTimeString(m.created_at)),
+            datasets: [
+                {
+                    data: props.measurements.map(m => m.brightness),
+                },
+            ]
+        };
+
+        return chartData;
+    });
+
+    let humidityMeasurements = $derived.by(() => {
+        const chartData: ChartData = {
+            labels: props.measurements.map(m => formatTimeString(m.created_at)),
+            datasets: [
+                {
+                    data: props.measurements.map(m => m.humidity),
+                },
+            ]
+        };
+
+        return chartData;
+    });
+
+    $inspect(moistureMeasurements)
 
     let data: ChartData = $state({
         labels: ["10:20", "10:40", "10:50", "11:00", "11:10", "11:20", "11:30"],
@@ -42,15 +94,23 @@
     function togglePump() {
 
     }
+
+    function formatTimeString(dateInputRaw: string) {
+        const date = new Date(dateInputRaw);
+        const hours = ("0" + date.getHours()).slice(-2);
+        const minutes = ("0" + date.getMinutes()).slice(-2);
+
+        return `${hours}:${minutes}`;
+    }
 </script>
 
 <RootLayout>
     <div class="flex gap-4 w-nav">
         <div class="flex-[8] grid grid-cols-2 gap-4">
-            <FullChart yAxisLabel="Moisture" color="#2563eb" {data} />
-            <FullChart yAxisLabel="Temperature" color="#ea580c" {data} />
-            <FullChart yAxisLabel="Brightness" color="#eab308" {data} />
-            <FullChart yAxisLabel="Humidity" color="#06b6d4" {data} />
+            <FullChart yAxisLabel="Moisture" color="#2563eb" data={moistureMeasurements} />
+            <FullChart yAxisLabel="Temperature" color="#ea580c" data={temperatureMeasurements} />
+            <FullChart yAxisLabel="Brightness" color="#eab308" data={brightnessMeasurements} />
+            <FullChart yAxisLabel="Humidity" color="#06b6d4" data={humidityMeasurements} />
         </div>
 
         <div class="flex-[2] flex flex-col gap-8">
