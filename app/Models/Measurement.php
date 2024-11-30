@@ -21,10 +21,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Measurement whereMoisture($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Measurement whereNodeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Measurement whereUpdatedAt($value)
+ * @property int $humidity
+ * @property int $brightness
+ * @property int $temperature
+ * @property-read \App\Models\Node $node
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Measurement whereBrightness($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Measurement whereHumidity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Measurement whereTemperature($value)
  * @mixin \Eloquent
  */
 class Measurement extends Model
 {
+    protected $guarded = [];
+
     public function node(): BelongsTo
     {
         return $this->belongsTo(Node::class);

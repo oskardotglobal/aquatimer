@@ -3,11 +3,12 @@
     import FullChart from "../Components/charts/FullChart.svelte";
 
     interface Props {
-        initialMeasurements: Measurement[];
+        measurements: Measurement[];
         node: Node;
     }
 
-    let { initialMeasurements }: Props = $props();
+    let props: Props = $props();
+    $inspect(props);
     let node: Node = $state({
         name: "Node 1",
     });

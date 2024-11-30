@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('measurements', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->float("moisture");
+
+            $table->integer("moisture");
+            $table->integer("humidity");
+            $table->integer("brightness");
+            $table->integer("temperature");
 
             $table->foreignId("node_id")->constrained();
         });

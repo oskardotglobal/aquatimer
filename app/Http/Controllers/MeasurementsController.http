@@ -1,0 +1,10 @@
+POST {{host}}/api/measurements/create
+Content-Type: application/json
+Accept: application/json
+
+{
+    "moisture": 999,
+    "humidity": 2,
+    "temperature": 69,
+    "brightness": 1
+}

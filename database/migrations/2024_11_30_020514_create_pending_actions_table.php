@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nodes', function (Blueprint $table) {
+        Schema::create('pending_actions', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
 
-            $table->string("ip_address")->unique();
+            $table->foreignId("node_id")->constrained();
+            $table->boolean("should_water");
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('nodes');
+        Schema::dropIfExists('pending_actions');
     }
 };
