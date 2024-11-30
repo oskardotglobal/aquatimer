@@ -1,6 +1,8 @@
 <script lang="ts">
     import RootLayout from "../Layouts/RootLayout.svelte";
     import FullChart from "../Components/charts/FullChart.svelte";
+    import { router } from '@inertiajs/svelte'
+    import {onMount} from "svelte";
 
     interface Props {
         measurements: Measurement[];
@@ -10,6 +12,13 @@
     let props: Props = $props();
 
     let node = $state(props.node);
+
+    onMount(() => {
+        setInterval(() => {
+            router.visit(window.location.pathname);
+            console.log("revisited")
+        }, 1000 * 60);
+    })
 
     let moistureMeasurements = $derived.by(() => {
         const chartData: ChartData = {
@@ -91,8 +100,13 @@
         // TODO: send mutation to server
     }
 
-    function togglePump() {
-
+    async function togglePump() {
+        await fetch("/api/water", {
+            method: "POST",
+            body: JSON.stringify({
+                node_id: node.id,
+            })
+        });
     }
 
     function formatTimeString(dateInputRaw: string) {
@@ -107,7 +121,9 @@
 <RootLayout>
     <div class="flex gap-4 w-nav">
         <div class="flex-[8] grid grid-cols-2 gap-4">
-            <FullChart yAxisLabel="Moisture" color="#2563eb" data={moistureMeasurements} />
+            <div class="text-center">
+                <FullChart yAxisLabel="Moisture" color="#2563eb" data={moistureMeasurements} />
+            </div>
             <FullChart yAxisLabel="Temperature" color="#ea580c" data={temperatureMeasurements} />
             <FullChart yAxisLabel="Brightness" color="#eab308" data={brightnessMeasurements} />
             <FullChart yAxisLabel="Humidity" color="#06b6d4" data={humidityMeasurements} />
